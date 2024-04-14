@@ -3,7 +3,7 @@ import Header from "./components/Header";
 
 function App() {
 	return (
-		<div className="w-[100vw] h-[100vh] bg-black text-white relative overflow-hidden">
+		<div className="w-[100vw] h-[100vh] bg-black text-white relative overflow-x-hidden">
 			<div className="container mx-auto bg-black">
 				<Header />
 				<div className="pt-20">
