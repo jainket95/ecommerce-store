@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const CartItem = ({ title, price, thumbnail }) => {
 	return (
 		<div className="w-full h-[8rem] flex justify-start items-start p-4 border border-gray-400 rounded-lg">

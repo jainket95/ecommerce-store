@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useReducer } from "react";
 import { appReducer, initialState } from "./reducer";
 import { AppContext, AppDispatchContext } from "./";

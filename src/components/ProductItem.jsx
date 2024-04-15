@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useAppDispatchContext } from "../context";
 import { actions } from "../context/types";
@@ -9,7 +10,6 @@ const ProductItem = ({ title, price, images, id }) => {
 
 	const handleAdd = async (id) => {
 		if (isAdded) return;
-		//frontend
 		setIsAdded(true);
 		await addProductToCart(id);
 		dispatch({
@@ -25,7 +25,7 @@ const ProductItem = ({ title, price, images, id }) => {
 					<img className="w-full h-full rounded-lg" src={images[0]} alt="" />
 				)}
 			</div>
-			<p className="text-xl font-semibold mb-3">{title}</p>
+			<p className="text-xl font-semibold mb-3 truncate">{title}</p>
 			<div className=" w-full flex justify-between items-center">
 				<p className="text-md font-normal">Rs {price}</p>
 				<button

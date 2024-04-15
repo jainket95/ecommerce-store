@@ -5,30 +5,18 @@ import { cartCheckout, validateDiscount } from "../../utils";
 import { v4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Summary from "../../components/Summary";
 
 const Cart = () => {
 	let {
-		cart: { items: cartData, total, totalPrice, totalDiscount },
+		cart: { items: cartData, total },
 		isDiscountAvailable,
 	} = useAppContext();
 
-	// const [cart, setCart] = useState(cartData || []);
 	const [discountCode, setDiscountCode] = useState("");
 
 	const dispatch = useAppDispatchContext();
 	const navigate = useNavigate();
-
-	// useEffect(() => {
-	// 	if (cart.length === 0) {
-	// 		fetchCart().then((cart) => {
-	// 			setCart(cart);
-	// 			dispatch({
-	// 				type: actions.FETCH_CART,
-	// 				payload: cart,
-	// 			});
-	// 		});
-	// 	}
-	// }, [cart, products?.length, dispatch]);
 
 	const handleDiscountApply = async () => {
 		setDiscountCode("");
@@ -72,27 +60,7 @@ const Cart = () => {
 				</div>
 				{cartData.length > 0 && total > 0 && (
 					<div className="w-1/2 flex flex-col justify-start items-start">
-						<div className="w-full flex flex-col justify-start items-start border border-gray-400 p-4 rounded-md mb-10">
-							<p className="w-full text-2xl font-normal uppercase mb-4 border-b border-gray-400 py-2">
-								Cart Summary
-							</p>
-							<div className="w-full flex justify-between items-center mb-2">
-								<p className="text-xl font-normal uppercase ">cart total :</p>
-								<p className="text-xl font-semibold">Rs {totalPrice}</p>
-							</div>
-							<div className="w-full flex justify-between items-center mb-2">
-								<p className="text-xl font-normal uppercase">shipping :</p>
-								<p className="text-xl font-semibold">Rs 0</p>
-							</div>
-							<div className="w-full flex justify-between items-center mb-2">
-								<p className="text-xl font-normal uppercase ">Discount :</p>
-								<p className="text-xl font-semibold">Rs {totalDiscount}</p>
-							</div>
-							<div className="w-full flex justify-between items-center my-2 pt-4 border-t border-gray-300">
-								<p className="text-xl font-normal uppercase ">net total :</p>
-								<p className="text-xl font-semibold">Rs {total}</p>
-							</div>
-						</div>
+						<Summary />
 						<div
 							className={`w-full flex flex-col justify-start items-start border border-gray-400 p-4 rounded-md mb-10 ${
 								!isDiscountAvailable ? "opacity-45" : "opacity-100"

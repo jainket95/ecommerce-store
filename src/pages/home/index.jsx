@@ -1,24 +1,8 @@
-import { useEffect, useState } from "react";
-import { useAppContext, useAppDispatchContext } from "../../context";
-import { fetchProducts } from "../../utils";
-import { actions } from "../../context/types";
+import { useAppContext } from "../../context";
 import ProductItem from "../../components/ProductItem";
 
 const Home = () => {
-	const dispatch = useAppDispatchContext();
-	const [products, setProducts] = useState([]);
-
-	useEffect(() => {
-		if (products.length === 0) {
-			fetchProducts().then((products) => {
-				setProducts(products);
-				dispatch({
-					type: actions.FETCH_PRODUCTS,
-					payload: products,
-				});
-			});
-		}
-	}, [products, products?.length, dispatch]);
+	const { products } = useAppContext();
 
 	return (
 		<div className="flex flex-col justify-start items-start">

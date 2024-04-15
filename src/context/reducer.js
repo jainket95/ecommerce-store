@@ -1,3 +1,5 @@
+/* eslint-disable no-case-declarations */
+import { isDiscountAvailable } from "../utils";
 import { actions } from "./types";
 
 export const initialState = {
@@ -14,6 +16,15 @@ export const initialState = {
 	orders: [],
 	discounts: [],
 	isDiscountAvailable: false,
+	adminStoreDetails: {
+		data: {
+			itemsQuantity: 0,
+			purchaseAmount: 0,
+			discountAmount: 0,
+			discounts: [],
+		},
+		isDataAvailable: false,
+	},
 };
 
 export const appReducer = (state, { type, payload }) => {
@@ -24,22 +35,30 @@ export const appReducer = (state, { type, payload }) => {
 				products: payload,
 			};
 
-		// case actions.cart:
-		// 	return {
-		// 		...state,
-		// 		cart: payload,
-		// 	};
+		case actions.FETCH_CART:
+			return {
+				...state,
+				cart: payload,
+			};
+
+		case actions.FETCH_DISCOUNTS:
+			return {
+				...state,
+				discounts: payload,
+				isDiscountAvailable: isDiscountAvailable(state),
+			};
+
+		case actions.FETCH_ADMIN_STORE_DETAILS:
+			return {
+				...state,
+				adminStoreDetails: payload,
+			};
 
 		case actions.ADD_PRODUCT_TO_CART:
 			const cartData = [
 				...state.cart.items,
 				...state.products.filter((product) => product.id === payload),
 			];
-			let nextOrderIndex = state.orders.length + 1;
-			const isDiscountAvailable =
-				state.discounts.findIndex(
-					(discount) => discount.index === nextOrderIndex
-				) >= 0;
 			const cartTotal = cartData.reduce(
 				(total, product) => total + Number(product.price),
 				0
@@ -53,7 +72,7 @@ export const appReducer = (state, { type, payload }) => {
 					totalPrice: cartTotal,
 					totalQuantity: cartData.length,
 				},
-				isDiscountAvailable,
+				isDiscountAvailable: isDiscountAvailable(state),
 			};
 
 		case actions.CART_CHECKOUT:
@@ -74,12 +93,14 @@ export const appReducer = (state, { type, payload }) => {
 			return {
 				...state,
 				discounts: [...state.discounts, payload],
+				isDiscountAvailable: isDiscountAvailable(state),
 			};
 
 		case actions.VALIDATE_DISCOUNT:
 			const applicableDiscount = state.discounts.find(
 				(discount) => discount.code === payload
 			);
+			console.log(applicableDiscount);
 			const cartTotalDiscount =
 				(state.cart.total * applicableDiscount.value) / 100;
 			return {
