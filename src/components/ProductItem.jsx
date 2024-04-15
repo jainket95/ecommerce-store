@@ -10,12 +10,12 @@ const ProductItem = ({ title, price, images, id }) => {
 	const handleAdd = async (id) => {
 		if (isAdded) return;
 		//frontend
+		setIsAdded(true);
+		await addProductToCart(id);
 		dispatch({
 			type: actions.ADD_PRODUCT_TO_CART,
 			payload: id,
 		});
-		await addProductToCart(id);
-		setIsAdded(true);
 	};
 
 	return (
