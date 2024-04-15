@@ -12,7 +12,7 @@ const Admin = () => {
 	return (
 		<div className="w-full flex flex-col justify-start items-start">
 			<h1 className="text-2xl font-normal uppercase mb-10">Admin Page</h1>
-			<div className="w-full flex flex-row-reverse justify-start items-start mb-44">
+			<div className="w-full flex flex-row-reverse justify-start items-start mb-28">
 				<AdminStoreDetails />
 				<GenerateDiscount />
 			</div>
